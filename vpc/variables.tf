@@ -1,36 +1,36 @@
 
 variable "net_name" {
-  type = string
+  type        = string
   description = "the name of the network in gcp"
 }
 
 variable "subnet_range" {
-  type = string
+  type        = string
   description = "CIDR for subnetwork nodes this is the main range"
 }
 
 variable "subnet_pods" {
-  type = string
+  type        = string
   description = "The secondary CIDR for kubernetes pods"
 }
 
 variable "subnet_services" {
-  type = string
+  type        = string
   description = "The secondary CIDR for kubernetes services"
 }
 
 variable "subnet_name" {
-  type = string
+  type        = string
   description = "This is the name for the subnetwork in gcp"
 }
 
 variable "region" {
-  type = string
+  type        = string
   description = "The main region for deployment"
 }
 
 variable "enable_flow_logs" {
-  type = string
+  type        = string
   description = "The flow log"
 }
 
@@ -41,7 +41,7 @@ variable "cloud_nat_ipaddr_count" {
 }
 
 variable "enable_cloud_nat" {
-  type = bool
+  type        = bool
   description = "Setup Cloud NAT gateway for common VPC"
   default     = false
 }
