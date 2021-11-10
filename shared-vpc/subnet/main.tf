@@ -4,14 +4,18 @@ resource "google_compute_subnetwork" "subnet" {
     network = var.shared_vpc
     region = var.region
     private_ip_google_access = true
-    enable_flow_logs = variable "enable_flow_logs" {
-        type = string
-        description = "(optional) describe your variable"
-    }
-    secondary_ip_range =  {
+    enable_flow_logs = var.enable_flow_logs
+    secondary_ip_range  {
       ip_cidr_range = var.subnet_pods
-      range_name = "value"
+      range_name = "gke-pod"
     } 
+    secondary_ip_range {
+      ip_cidr_range = var.subnet_services
+      range_name = "gke-service"
+    }
+    lifecycle {
+      ignore_changes = [secondary_ip_range]
+    }
 
   
 }
