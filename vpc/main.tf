@@ -39,3 +39,22 @@ resource "google_compute_router" "router" {
   name = var.net_name
   
 }
+
+resource "google_compute_address" "ip_addr" {
+    region = var.region
+    count = local.cloud_nat_address_count
+    name = "external-nat-addr-${count.index}"
+  
+}
+
+resource "google_compute_router_nat" "nat_router" {
+    name = var.net_name
+    count = local.enable_cloud_nat
+    router = google_compute_router.router.0.name
+    region = var.region
+    nat_ip_allocate_option = var.nat_ip_allocate_option
+    nat_ips = local.nat_ips
+    source_subnetwork_ip_ranges_to_nat = "ALL_SUBNETWORKS_ALL_IP_RANGES"
+
+  
+}
