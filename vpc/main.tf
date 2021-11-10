@@ -1,8 +1,7 @@
-
 locals {
   enable_cloud_nat        = var.enable_cloud_nat == true ? 1 : 0
   cloud_nat_address_count = var.nat_ip_allocate_option != "AUTO_ONLY" ? var.cloud_nat_ipaddr_count * local.enable_cloud_nat : 0
-  nat_ips                 = var.nat_ip_allocate_option != "AUTO_ONLY" ? google_compute_address.ip_address.*.self_link : null
+  nat_ips                 = var.nat_ip_allocate_option != "AUTO_ONLY" ? google_compute_address.ip_addr.*.self_link : null
 }
 
 resource "google_compute_network" "net" {
@@ -14,7 +13,7 @@ resource "google_compute_network" "net" {
 resource "google_compute_subnetwork" "subnet" {
   name                     = var.subnet_name
   ip_cidr_range            = var.subnet_range
-  network                  = google_compute_network.network.self_link
+  network                  = google_compute_network.net.self_link
   region                   = var.region
   private_ip_google_access = true
 
