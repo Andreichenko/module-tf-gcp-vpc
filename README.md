@@ -1,4 +1,4 @@
-###VPC module parameters
+ # VPC module parameters
 
  This module can be configured with cloud nat gateway and the counter can be used to select the desired number of public IP addresse.
  
