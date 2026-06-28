@@ -1,0 +1,49 @@
+name: 'Terraform Validate'
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: 'Validate GCP Modules'
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        module:
+          - 'cloud-nat'
+          - 'compute'
+          - 'native-vpc'
+          - 'node-pools'
+          - 'shared-vpc/net'
+          - 'shared-vpc/subnet'
+          - 'vpc'
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v3
+
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v2
+      with:
+        terraform_version: 1.5.7
+
+    - name: Format Check
+      run: terraform fmt -check -recursive
+      continue-on-error: true
+
+    - name: Terraform Init
+      run: |
+        cd ${{ matrix.module }}
+        terraform init -backend=false
+
+    - name: Terraform Validate
+      run: |
+        cd ${{ matrix.module }}
+        terraform validate

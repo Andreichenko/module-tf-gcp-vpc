@@ -2,7 +2,7 @@ variable "region" {
     
 }
 
-variable "count" {
+variable "instance_count" {
 
 }
 variable "name_prefix" {

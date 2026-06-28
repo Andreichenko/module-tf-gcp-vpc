@@ -1,3 +1,8 @@
+locals {
+  cloud_nat_address_count = var.nat_ip_allocate_option != "AUTO_ONLY" ? var.cloud_nat_addr_count : 0
+  nat_ips                 = var.nat_ip_allocate_option != "AUTO_ONLY" ? google_compute_address.ip_address.*.self_link : null
+}
+
 resource "google_compute_network" "net" {
   name = var.net_name
   routing_mode            = "GLOBAL"
@@ -40,7 +45,7 @@ resource "google_compute_address" "ip_address" {
 }
 
 resource "google_compute_router_nat" "nat_router" {
-  name                               = var.network_name
+  name                               = var.net_name
   router                             = google_compute_router.router.name
   region                             = var.region
   nat_ip_allocate_option             = var.nat_ip_allocate_option

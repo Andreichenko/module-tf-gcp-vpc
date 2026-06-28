@@ -4,6 +4,6 @@ data "google_compute_zones" "available" {
 }
 
 resource "google_compute_address" "instances" {
-  count = "${var.count}"
+  count = var.instance_count
   name  = "${var.name_prefix}-${count.index}"
 }
